@@ -3,9 +3,14 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'name' => 'OpenAsk',
+    'language' => 'zh-CN',
+    'sourceLanguage' => 'zh-CN',
+    'timeZone' => 'Asia/Shanghai',
+    'id' => 'app',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+	'defaultRoute' => 'explore',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -38,14 +43,23 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        /*
-        'urlManager' => [
+		'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'home' => 'index/index',
+                'topic' => 'topic/index',
+                'explore' => 'explore/index',
+                'search' => 'search/index',
+                'settings' => 'settings/index',
+                'inbox' => 'inbox/index',
+                'logout' => 'site/logout',
+                'people/<slug:[\w-]{5,}>' => 'people/view',
+                'question/<id:[\d]+>' => 'question/view',
+                'question/update/<id:[\d]+>' => 'question/update',
+                'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>' => 'question/answer',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

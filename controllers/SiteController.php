@@ -2,12 +2,15 @@
 
 namespace app\controllers;
 
+use app\helpers\Helper;
+use app\models\Topic;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -63,25 +66,16 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
-    /**
-     * Login action.
-     *
-     * @return string
-     */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+        if (Yii::$app->request->isPost) {
+            Yii::$app->user->login(User::findOne(Yii::$app->request->post('user_id')));
+            return 'login success';
+        } else {
+            return $this->render('login');
         }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
     }
+	
 
     /**
      * Logout action.
@@ -121,5 +115,15 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionSearchTopic($q = '')
+    {
+        Helper::outputJson();
+        $topics = Topic::find()->select('name as text')->where(['like', 'name', $q])->orderBy('count desc')->limit(400)->asArray()->all();
+        foreach ($topics as $k => $topic) {
+            $topics[$k]['id'] = $topic['text'];
+        }
+        return ['results' => $topics];
     }
 }

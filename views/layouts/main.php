@@ -1,78 +1,98 @@
 <?php
+use app\assets\AppAsset;
+use yii\bootstrap\Dropdown;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
-
 AppAsset::register($this);
+
+$this->beginContent(__DIR__ . '/minimal.php');
+
+$USERNAME = 'upliu';
+$NICKNAME = '开飞机的小蜗牛';
+
 ?>
-<?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
+<?php $this->beginBlock('search-form'); ?>
+    <form class="navbar-form navbar-left" role="search" method="get" action="<?= Url::to(['/search/index']) ?>">
+        <input type="hidden" name="type" value="content">
+        <div class="form-group">
+            <div class="input-group">
+                <input required type="text" id="q" name="q" class="form-control" placeholder="<?= Yii::t('app', '搜索你感兴趣的内容...') ?>">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </form>
+<?php $this->endBlock(); ?>
+
+
+<?php $this->beginBlock('userinfo'); ?>
+<li class="i-userinfo dropdown">
+    <a class="i-username" href="<?= Url::to(['/people/view', 'slug' => $USERNAME]) ?>"><?= $NICKNAME ?></a>
+    <?= Dropdown::widget([
+        'encodeLabels' => false,
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
+            ['label' => '<span class="glyphicon glyphicon-user"></span> '.Yii::t('app', '我的主页'), 'url' => ['/people/view', 'slug' => $USERNAME]],
+            ['label' => '<span class="glyphicon glyphicon-envelope"></span> '.Yii::t('app', '私信'), 'url' => ['/inbox/index']],
+            ['label' => '<span class="glyphicon glyphicon-cog"></span> '.Yii::t('app', '设置'), 'url' => ['/settings/index']],
+            ['label' => '<span class="glyphicon glyphicon-off"></span> '.Yii::t('app', '退出'), 'url' => ['/site/logout']],
         ],
-    ]);
-    NavBar::end();
-    ?>
+    ]) ?>
+</li>
+<?php $this->endBlock() ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
+
+
+<?php
+NavBar::begin([
+    'brandLabel' => Yii::$app->name,
+    'brandUrl' => Yii::$app->homeUrl,
+    'options' => [
+        'class' => 'navbar-fixed-top i-navbar-default navbar-default',
+    ],
+]);
+
+
+echo Nav::widget([
+    'options' => ['class' => 'navbar-nav pull-right'],
+    'items' => [
+        '<a class="btn btn-default pull-left cmd-ask i-ask" href="'.Url::to(['/question/create']).'">'.Yii::t('app', '提问').'</a>',
+        $this->blocks['userinfo']
+    ],
+]);
+
+echo Nav::widget([
+    'encodeLabels' => false,
+    'options' => ['class' => 'navbar-nav'],
+    'items' => [
+        $this->blocks['search-form'],
+        ['label' => Yii::t('app', '首页'), 'url' => ['/index/index']],
+        ['label' => Yii::t('app', '话题'), 'url' => ['/topic/index']],
+        ['label' => Yii::t('app', '发现'), 'url' => ['/explore/index']],
+        ['label' => Yii::t('app', '消息'), 'url' => 'javascript:;', 'options' => ['class' => 'cmd-message']],
+    ],
+]);
+NavBar::end();
+?>
+
+<div class="container">
+    <div class="i-main-content">
+        <div class="i-main-content-inner">
+            <?= $content ?>
+        </div>
+    </div>
+    <div class="i-main-sidebar">
+        sidebar
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
-</body>
-</html>
-<?php $this->endPage() ?>
+<?php
+$this->endContent();
