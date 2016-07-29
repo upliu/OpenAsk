@@ -12,14 +12,14 @@ use Yii;
  * @property string $uid
  * @property integer $add_time
  */
-class MapPostTopic extends \yii\db\ActiveRecord
+class PostTopic extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%map_post_topic}}';
+        return '{{%post_topic}}';
     }
 
     /**

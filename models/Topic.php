@@ -42,9 +42,9 @@ class Topic extends ActiveRecord
 
     public function statistics()
     {
-        $this->count = MapPostTopic::find()->where(['topic_id' => $this->id])->count();
-        $this->count_last_week = MapPostTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*7])->count();
-        $this->count_last_month = MapPostTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*30])->count();
+        $this->count = PostTopic::find()->where(['topic_id' => $this->id])->count();
+        $this->count_last_week = PostTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*7])->count();
+        $this->count_last_month = PostTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*30])->count();
         return $this;
     }
 

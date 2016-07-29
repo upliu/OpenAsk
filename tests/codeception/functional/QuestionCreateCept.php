@@ -10,7 +10,7 @@ $I->see('login success');
 $I->amOnPage('/question/create');
 $I->see('发布');
 $I->submitForm('.post-form form', [
-    'Post' => [
+    'Question' => [
         'title' => '测试 QuestionCreate',
         'body' => '<p>测试 QuestionCreate，文章内容</p>',
         'tagValues' => 'php,js',

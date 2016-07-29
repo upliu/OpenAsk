@@ -15,7 +15,7 @@ class Question extends Post
     public function getTopics()
     {
         return $this->hasMany(Topic::className(), ['id' => 'topic_id'])
-            ->viaTable(MapPostTopic::tableName(), ['post_id' => 'id']);
+            ->viaTable(PostTopic::tableName(), ['post_id' => 'id']);
     }
 
     public function init()
@@ -55,7 +55,7 @@ class Question extends Post
     {
         parent::afterDelete();
         // 删除话题关联数据
-        MapPostTopic::deleteAll(['post_id' => $this->id]);
+        PostTopic::deleteAll(['post_id' => $this->id]);
     }
 
     public function afterSave($insert, $changedAttributes)
@@ -68,10 +68,10 @@ class Question extends Post
         }
 
         // 删除话题关联数据
-        MapPostTopic::deleteAll(['post_id' => $this->id]);
+        PostTopic::deleteAll(['post_id' => $this->id]);
         // 添加话题关联
         foreach ($this->tagValues as $tag) {
-            MapPostTopic::add($tag, $this->id, \Yii::$app->user->id);
+            PostTopic::add($tag, $this->id, \Yii::$app->user->id);
         }
     }
 }
