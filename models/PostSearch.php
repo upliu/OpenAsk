@@ -82,4 +82,62 @@ class PostSearch extends Post
 
         return $dataProvider;
     }
+
+    public function question(Topic $topic = null, $filter = '')
+    {
+        $query = Question::find();
+        $query->with('author', 'lastAnswerAuthor', 'topics');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'last_active' => SORT_DESC,
+                ]
+            ],
+            'pagination' => [
+                'pageSize' => '20'
+            ],
+        ]);
+
+        if ($topic) {
+            $query->topicId($topic->id);
+        }
+
+        switch ($filter) {
+            case 'unanswered':
+                $query->noAnswer();
+                break;
+            case 'unsolved':
+                $query->noAccept();
+                break;
+        }
+
+        return $dataProvider;
+    }
+
+    public function answer($question_id, $sort = '')
+    {
+        $query = Answer::find();
+        $query->andWhere(['question_id' => $question_id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'count_vote_up' => SORT_DESC,
+                ]
+            ],
+            'pagination' => [
+                'pageSize' => '20'
+            ],
+        ]);
+
+        switch ($sort) {
+            case 'created':
+                $query->orderBy('created_at desc');
+                break;
+        }
+
+        return $dataProvider;
+    }
 }

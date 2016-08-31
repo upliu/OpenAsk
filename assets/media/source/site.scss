@@ -11,6 +11,9 @@ body {
   width: 960px;
   padding: 0;
 }
+.redactor-editor {
+  padding: 12px;
+}
 .i-navbar-default {
   .i-ask {
     margin-top: 7px;
@@ -107,7 +110,7 @@ $sidebar_w: 270px;
   $navbar-default-bg: #0767c8;
   $navbar-default-link-color: #eee;
   $navbar-default-link-hover-color: #fff;
-  $navbar-default-link-active-color: $navbar-default-link-hover-color; 
+  $navbar-default-link-active-color: $navbar-default-link-hover-color;
   $navbar-default-link-hover-bg: $navbar-default-bg;
   $navbar-default-link-active-bg: #075fb6;
 
@@ -186,7 +189,7 @@ $sidebar_w: 270px;
         }
         */
       }
-    
+
   }
 
 

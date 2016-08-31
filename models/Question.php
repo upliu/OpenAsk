@@ -6,8 +6,10 @@ namespace app\models;
 /**
  * Class Question
  * @package app\models
+ *
  * @property Topic[] $topics
  * @property string[] $tagValues
+ * @property User $lastAnswerAuthor
  */
 class Question extends Post
 {
@@ -18,10 +20,18 @@ class Question extends Post
             ->viaTable(PostTopic::tableName(), ['post_id' => 'id']);
     }
 
-    public function init()
+    public function scenarios()
     {
-        parent::init();
-        $this->scenario = 'question';
+        return [
+            'default' => ['title', 'body', 'is_anonymous', 'tagValues', '!author_id'],
+        ];
+    }
+
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            [['title', 'tagValues'], 'required']
+        ]);
     }
 
     private $_tagValues;
@@ -36,9 +46,11 @@ class Question extends Post
         return $this->_tagValues;
     }
 
+    private $_tabValuesSeted;
     public function setTagValues($values)
     {
         $this->_tagValues = $this->filterTagValues($values);
+        $this->_tabValuesSeted = true;
     }
 
     public function filterTagValues($values)
@@ -51,27 +63,38 @@ class Question extends Post
         ));
     }
 
-    public function afterDelete()
+    public function beforeSave($insert)
     {
-        parent::afterDelete();
-        // 删除话题关联数据
-        PostTopic::deleteAll(['post_id' => $this->id]);
+        if (parent::beforeSave($insert)) {
+            if ($insert) {
+                $this->is_anonymous = intval($this->is_anonymous);
+                $this->last_active = time();
+            }
+            return true;
+        }
     }
 
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
 
-        // 处理 Feed 信息流
-        if ($insert && !$this->is_anonymous) {
-            Feed::add(Feed::TYPE_ADD_QUESTION, $this->author_id, $this);
+        if ($insert) {
+            UserActionHistory::add(UserActionHistory::TYPE_ADD_QUESTION, $this->author_id, $this);
         }
 
-        // 删除话题关联数据
-        PostTopic::deleteAll(['post_id' => $this->id]);
-        // 添加话题关联
-        foreach ($this->tagValues as $tag) {
-            PostTopic::add($tag, $this->id, \Yii::$app->user->id);
+        if ($this->_tabValuesSeted) {
+            // 删除话题关联数据
+            PostTopic::deleteAll(['post_id' => $this->id]);
+            // 添加话题关联
+            foreach ($this->tagValues as $tag) {
+                PostTopic::add($tag, $this->id, \Yii::$app->user->id);
+            }
         }
     }
+
+    public function getLastAnswerAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'last_answer_by']);
+    }
+
 }

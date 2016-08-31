@@ -19,25 +19,19 @@ class FeedSearch extends Object
     public function init()
     {
         $this->user = $this->user ?: \Yii::$app->user->identity;
-        $this->_query = Feed::find();
-    }
-
-    public function searchList($limit)
-    {
-        $this->_query->limit($limit);
-        $feeds = $this->_search();
-        if (isset($feeds[0])) {
-            $this->user->last_read_feed = $feeds[0]->id;
-            $this->user->save(false);
-        }
-        return $feeds;
+        $this->_query = UserActionHistory::find();
     }
 
     public function search($offsetId, $limit)
     {
         $this->_query->andWhere(['<', 'id', $offsetId]);
         $this->_query->limit($limit);
-        return $this->_search();
+        $feeds = $this->_search();
+        if (isset($feeds[0])) {
+            $this->user->last_read_feed = $feeds[0]->id;
+            $this->user->save();
+        }
+        return $feeds;
     }
 
     protected function _search()
@@ -49,7 +43,7 @@ class FeedSearch extends Object
             ->with('post', 'author')
             ->select('id,uid,type,question_id,answer_id')
             ->orderBy('id desc')
-            ->andWhere(['uid' => MapUserFollow::getFollowsQuery($user->id)])
+            ->andWhere(['uid' => UserFollow::getFollowsQuery($user->id)])
             ->all();
 
         return $feeds;
@@ -60,7 +54,7 @@ class FeedSearch extends Object
         $user = $this->user;
         // @todo 关注的话题
         return $this->_query
-            ->andWhere(['uid' => MapUserFollow::getFollowsQuery($user->id)])
+            ->andWhere(['uid' => UserFollow::getFollowsQuery($user->id)])
             ->andWhere(['>', 'id', $user->last_read_feed])
             ->count();
     }

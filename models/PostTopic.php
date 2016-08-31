@@ -40,22 +40,9 @@ class PostTopic extends \yii\db\ActiveRecord
             'post_id' => $post_id,
             'topic_id' => $topic->id,
             'uid' => $uid,
+            'add_time' => time(),
         ]);
         $rel->save(false);
-    }
-
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            $this->add_time = time();
-            return true;
-        }
-    }
-
-    public function afterSave($insert, $changedAttributes)
-    {
-        parent::afterSave($insert, $changedAttributes);
-        Topic::findOne($this->topic_id)->statistics()->save(false);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 use app\helpers\Helper;
 use app\models\Map;
-use app\models\MapUserFollow;
+use app\models\UserFollow;
 use kartik\icons\Icon;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -106,7 +106,7 @@ $this->title = $user->display_name;
     <dl class="i-profile-section">
         <dt><?= Yii::t('app', '最新动态') ?></dt>
         <?php $i = 10; while ($i-- > 0) { ?>
-            <dd><?= $this->render('/_inc/feed-item') ?></dd>
+<!--            <dd>--><?//= $this->render('/_inc/feed-item') ?><!--</dd>-->
         <?php } ?>
         <dd class="i-load-more-wrap">
             <button class="i-load-more cmd-load-more">

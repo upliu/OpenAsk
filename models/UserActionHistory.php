@@ -1,45 +1,22 @@
 <?php
-
+/**
+ * Created by IntelliJ IDEA.
+ * User: liu
+ * Date: 8/25/16
+ * Time: 10:14
+ */
 
 namespace app\models;
 
+use app\models\base\BaseUserActionHistory;
 
-use app\helpers\Helper;
-use yii\db\ActiveRecord;
 
-/**
- * This is the model class for table "{{%feed}}".
- *
- * @property string $id
- * @property integer $type
- * @property string $uid
- * @property integer $time
- * @property integer $question_id
- * @property integer $answer_id
- * @property User $author
- * @property Post $answer
- * @property Post $question
- */
-class Feed extends ActiveRecord
+class UserActionHistory extends BaseUserActionHistory
 {
-
     const TYPE_FOLLOW_QUESTION = 1; // 关注该问题
     const TYPE_ADD_QUESTION = 2; // 添加该问题
     const TYPE_VOTE_ANSWER = 3; // 赞同该回答
     const TYPE_ADD_ANSWER = 4; // 回答了该问题
-
-    public static function tableName()
-    {
-        return '{{%feed}}';
-    }
-
-    public function rules()
-    {
-        return [
-            [['type', 'uid', 'time'], 'required'],
-            [['type', 'uid', 'time', 'question_id', 'answer_id'], 'integer'],
-        ];
-    }
 
     public function getTypeDesc()
     {
@@ -72,24 +49,18 @@ class Feed extends ActiveRecord
 
     public static function add($type, $uid, Post $post)
     {
-        $feed = new static([
+        $model = new static([
             'type' => $type,
             'uid' => $uid,
             'time' => time(),
+            'is_anonymous' => $post->is_anonymous
         ]);
         if ($post->getIsQuestion()) {
-            $feed->question_id = $post->id;
+            $model->question_id = $post->id;
         } else {
-            $feed->answer_id = $post->id;
-            $feed->question_id = $post->question_id;
+            $model->answer_id = $post->id;
+            $model->question_id = $post->question_id;
         }
-        $feed->save(false);
-
-        return $feed;
-    }
-
-    public static function deleteByUidAndQuestionId($uid, $question_id)
-    {
-        static::deleteAll(['uid' => $uid, 'question_id' => $question_id]);
+        $model->save(false);
     }
 }

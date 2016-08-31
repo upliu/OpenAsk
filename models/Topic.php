@@ -59,4 +59,9 @@ class Topic extends ActiveRecord
         return $model;
     }
 
+    public static function findByName($name)
+    {
+        return static::findOne(['name' => $name]);
+    }
+
 }

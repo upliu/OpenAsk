@@ -9,7 +9,9 @@
 namespace app\controllers;
 
 
+use app\models\Answer;
 use app\models\Post;
+use app\models\PostSearch;
 use app\models\Question;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -51,7 +53,6 @@ class QuestionController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario = 'question';
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -62,17 +63,30 @@ class QuestionController extends Controller
         }
     }
 
-    public function actionView($id)
+    public function actionView($id, $sort = '')
     {
-        $model = $this->findModel($id);
+        $question = $this->findModel($id);
+        $answer = new Answer();
+        $dataProvider = (new PostSearch())->answer($id, $sort);
         return $this->render('view', [
-            'post' => $model
+            'question' => $question,
+            'dataProvider' => $dataProvider,
+            'answer' => $answer,
         ]);
     }
 
-    public function actionAnswer($question_id, $answer_id)
+    public function actionAnswer($question_id, $answer_id, $sort = '')
     {
-        var_dump($question_id, $answer_id);
+        $question = $this->findModel($question_id);
+        $answer = Answer::findOne(['id' => $answer_id]);
+        if (!$answer) {
+            throw new NotFoundHttpException();
+        }
+        $dataProvider = (new PostSearch())->answer($question_id, $sort);
+        return $this->render('answer', [
+            'question' => $question,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     protected function findModel($id)

@@ -3,7 +3,7 @@
 namespace app\helpers;
 
 use app\models\Map;
-use app\models\MapUserFollow;
+use app\models\UserFollow;
 use app\models\User;
 use kartik\icons\Icon;
 use yii\helpers\Html;
@@ -55,7 +55,7 @@ class Helper
     {
         $a = is_object($userA) ? $userA->id : $userA;
         $b = $userB->id;
-        $rel = MapUserFollow::relation($a, $b);
+        $rel = UserFollow::relation($a, $b);
         switch ($rel) {
             case Map::A2B: // 我关注了他
                 $icon = '';

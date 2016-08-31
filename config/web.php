@@ -17,7 +17,7 @@ $config = [
             'cookieValidationKey' => 'BhGwCRHZ7b8Qr9t19grCs9YGhNP17erb',
         ],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\DummyCache',
         ],
         'user' => [
             'identityClass' => 'app\models\User',
@@ -34,11 +34,11 @@ $config = [
             'useFileTransport' => true,
         ],
         'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
+//            'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => ['error', 'warning',],
                 ],
             ],
         ],
@@ -54,6 +54,7 @@ $config = [
                 'settings' => 'settings/index',
                 'inbox' => 'inbox/index',
                 'logout' => 'site/logout',
+                't/<topicName:.+>' => 'explore/index',
                 'people/<slug:[\w-]{5,}>' => 'people/view',
                 'question/<id:[\d]+>' => 'question/view',
                 'question/update/<id:[\d]+>' => 'question/update',

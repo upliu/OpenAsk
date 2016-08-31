@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $feed app\models\Feed */
+/* @var $feed app\models\BaseFeed */
 
 $author = $feed->author;
 $post = $feed->post;

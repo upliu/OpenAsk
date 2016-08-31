@@ -48,7 +48,7 @@ use vova07\imperavi\Widget;
             ],
         ],
     ])->label(Yii::t('app', '话题'))?>
-    
+
     <?= $form->field($post, 'is_anonymous')->checkbox([
         'label' => Yii::t('app', '匿名')
     ]) ?>
