@@ -70,12 +70,12 @@ class SiteController extends Controller
     {
         if (Yii::$app->request->isPost) {
             Yii::$app->user->login(User::findOne(Yii::$app->request->post('user_id')));
-            return 'login success';
+            return 'login success <p><a href="/">Back to home</a></p>';
         } else {
             return $this->render('login');
         }
     }
-	
+
 
     /**
      * Logout action.
