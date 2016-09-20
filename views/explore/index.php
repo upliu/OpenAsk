@@ -12,6 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="post-index">
     <?= ListView::widget([
+        'itemOptions' => ['class' => 'question-item'],
         'dataProvider' => $dataProvider,
         'itemView' => 'question-item',
         'summary' => '',

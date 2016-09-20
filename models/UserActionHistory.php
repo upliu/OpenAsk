@@ -47,7 +47,7 @@ class UserActionHistory extends BaseUserActionHistory
         return $this->hasOne(User::className(), ['id' => 'uid']);
     }
 
-    public static function add($type, $uid, Post $post)
+    public static function add($type, $uid, $post)
     {
         $model = new static([
             'type' => $type,
@@ -55,7 +55,7 @@ class UserActionHistory extends BaseUserActionHistory
             'time' => time(),
             'is_anonymous' => $post->is_anonymous
         ]);
-        if ($post->getIsQuestion()) {
+        if ($post instanceof Question) {
             $model->question_id = $post->id;
         } else {
             $model->answer_id = $post->id;

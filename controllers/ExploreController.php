@@ -9,23 +9,24 @@
 namespace app\controllers;
 
 
-use app\models\PostSearch;
+use app\models\QuestionSearch;
 use app\models\Topic;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 class ExploreController extends Controller
 {
-    public function actionIndex($topicName = '', $filter = '')
+    public function actionIndex($topic = '', $filter = '')
     {
-        $topic = null;
-        if ($topicName) {
-            $topic = Topic::findByName($topicName);
+        if ($topic) {
+            $topic = Topic::findByName($topic);
             if (!$topic) {
                 throw new NotFoundHttpException();
             }
+        } else {
+            $topic = null;
         }
-        $search = new PostSearch();
+        $search = new QuestionSearch();
         $dataProvider = $search->question($topic, $filter);
         return $this->render('index', ['dataProvider' => $dataProvider, 'topic' => $topic]);
     }

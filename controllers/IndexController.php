@@ -10,11 +10,14 @@ namespace app\controllers;
 
 
 use yii\web\Controller;
+use app\models\QuestionSearch;
 
 class IndexController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+        $search = new QuestionSearch();
+        $dataProvider = $search->index();
+        return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 }

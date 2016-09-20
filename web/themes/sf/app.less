@@ -1,0 +1,260 @@
+@import "../../../vendor/bower/bootstrap/less/mixins.less";
+
+// Reset and dependencies
+@import "../../../vendor/bower/bootstrap/less/normalize.less";
+@import "../../../vendor/bower/bootstrap/less/print.less";
+
+// Core CSS
+@import "../../../vendor/bower/bootstrap/less/scaffolding.less";
+@import "../../../vendor/bower/bootstrap/less/type.less";
+@import "../../../vendor/bower/bootstrap/less/code.less";
+@import "../../../vendor/bower/bootstrap/less/grid.less";
+@import "../../../vendor/bower/bootstrap/less/tables.less";
+@import "../../../vendor/bower/bootstrap/less/forms.less";
+@import "../../../vendor/bower/bootstrap/less/buttons.less";
+
+// Components
+@import "../../../vendor/bower/bootstrap/less/component-animations.less";
+@import "../../../vendor/bower/bootstrap/less/dropdowns.less";
+@import "../../../vendor/bower/bootstrap/less/button-groups.less";
+@import "../../../vendor/bower/bootstrap/less/input-groups.less";
+@import "../../../vendor/bower/bootstrap/less/navs.less";
+@import "../../../vendor/bower/bootstrap/less/navbar.less";
+@import "../../../vendor/bower/bootstrap/less/breadcrumbs.less";
+@import "../../../vendor/bower/bootstrap/less/pagination.less";
+@import "../../../vendor/bower/bootstrap/less/pager.less";
+@import "../../../vendor/bower/bootstrap/less/labels.less";
+@import "../../../vendor/bower/bootstrap/less/badges.less";
+@import "../../../vendor/bower/bootstrap/less/jumbotron.less";
+@import "../../../vendor/bower/bootstrap/less/thumbnails.less";
+@import "../../../vendor/bower/bootstrap/less/alerts.less";
+@import "../../../vendor/bower/bootstrap/less/progress-bars.less";
+@import "../../../vendor/bower/bootstrap/less/media.less";
+@import "../../../vendor/bower/bootstrap/less/list-group.less";
+@import "../../../vendor/bower/bootstrap/less/panels.less";
+@import "../../../vendor/bower/bootstrap/less/responsive-embed.less";
+@import "../../../vendor/bower/bootstrap/less/wells.less";
+@import "../../../vendor/bower/bootstrap/less/close.less";
+
+// Components w/ JavaScript
+@import "../../../vendor/bower/bootstrap/less/modals.less";
+@import "../../../vendor/bower/bootstrap/less/tooltip.less";
+@import "../../../vendor/bower/bootstrap/less/popovers.less";
+@import "../../../vendor/bower/bootstrap/less/carousel.less";
+
+// Utility classes
+@import "../../../vendor/bower/bootstrap/less/utilities.less";
+@import "../../../vendor/bower/bootstrap/less/responsive-utilities.less";
+
+@import "variables";
+@import "global";
+@import "widget";
+@import "redactor-editor";
+
+.global-nav {
+  margin-bottom:0;
+  border-radius: 0;
+  .nav > li {
+    padding: 10px 0;
+    > a {
+      padding: 0 13px;
+      line-height: 30px;
+      font-size: 16px;
+      color: #666;
+      border-radius: 2px;
+    }
+    .login {
+      color: #fff;
+      background-color: @brand-primary;
+      border: 0;
+    }
+  }
+}
+
+.global-nav-tags {
+  background-color: #005f3c;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.24);
+  .nav {
+    > li {
+      float: left;
+      color: #9dccb6;
+      a {
+        > i {
+          margin-right: 2px;
+        }
+        padding: 10px;
+        color: #9dccb6;
+        white-space: nowrap;
+        line-height: 1;
+        background:none;
+      }
+      .link:hover,.link:focus {
+        background:none;
+        text-decoration: underline;
+      }
+      .topic:hover,.topic:focus {
+        background-color: hsla(0,0%,100%,.15);
+        text-decoration: none;
+      }
+    }
+
+    .all-topic {
+      float: right;
+      a {
+        padding: 0;
+        line-height: 34px;
+        font-size: 1.8em;
+      }
+    }
+
+    > .active a {
+      color: #fff;
+    }
+  }
+  .space {
+    line-height: 34px;
+    margin: 0 10px;
+  }
+}
+
+.nav-tabs-q {
+  margin-top: 30px;
+  margin-bottom: 10px;
+  li {
+    margin-right: 30px;
+
+
+    a {
+      text-align: center;
+      min-width: 110px;
+      color: #333;
+      font-weight: bold;
+      border: none;
+    }
+
+    &.active a
+    ,&.active a:hover
+    ,&.active a:focus
+    ,a:hover
+    ,a:focus {
+      border: none;
+      background: #fff;
+      border-bottom: 3px solid @brand-primary;
+    }
+
+  }
+}
+
+// 问题列表
+.question-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+
+  .question-rank {
+    text-align: center;
+    float: left;
+    margin-right: 5px;
+    .vote,.answer,.view {
+      display: inline-block;
+      width: 45px;
+      height: 40px;
+      font-size: 16px;
+      div {
+        font-size: @font-size-small;
+      }
+    }
+    .vote {
+      color: #666;
+    }
+    .view {
+      color: #999;
+    }
+    .answer {
+      color: #fff;
+      background-color: #ad3a37;
+    }
+    .answered {
+      background-color: @brand-primary;
+    }
+    .solved {
+      background-color: #808b87;
+    }
+  }
+
+  .summary {
+    overflow: auto;
+    overflow-x: hidden;
+    .author {
+      color: #999;
+    }
+    .title {
+      font-size: 16px;
+      color: #333;
+      font-weight: bold;
+      &:hover {
+        color: @brand-primary;
+      }
+    }
+  }
+}
+
+.tag-list {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  > li {
+    display: inline-block;
+    > a {
+      display: block;
+      font-size: @font-size-small;
+      line-height: 20px;
+      padding: 0 6px;
+      color: #017e66;
+      background-color: rgba(1,126,102,.08);
+      &:hover {
+        background-color: #017e66;
+        color: #fff;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// 问题详情
+.post-header {
+  padding: 20px 0;
+  background: #f6f6f6;
+  color: #999;
+  h3 {
+    color: #333;
+    margin: 0 0 15px 0;
+  }
+  strong {
+    color: #333;
+  }
+  .info {
+    margin-left: 40px;
+  }
+  .author {
+    margin-left: 5px;
+    font-weight: bold;
+  }
+}
+
+.question-detail {
+  //height: 150px;
+}
+
+.question-answer {
+  margin: 30px 0 20px 0;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #ccc;
+}
+
+.answer-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+

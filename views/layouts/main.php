@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 AppAsset::register($this);
 
-$this->beginContent(__DIR__ . '/minimal.php');
+$this->beginContent('@app/views/layouts/minimal.php');
 
 $USERNAME = 'upliu';
 $NICKNAME = '开飞机的小蜗牛';

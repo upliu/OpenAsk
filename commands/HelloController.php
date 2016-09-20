@@ -27,4 +27,16 @@ class HelloController extends Controller
     {
         echo $message . "\n";
     }
+
+    public function actionBsConfig()
+    {
+        $vars_file = \Yii::getAlias('@app/web/themes/sf/vars.less');
+        $json_file = '/Users/liu/Downloads/bootstrap/config.json';
+        $data = json_decode(file_get_contents($json_file), true);
+        $vars = $data['vars'];
+        $f = fopen($vars_file, 'a');
+        foreach ($vars as $var => $value) {
+            fwrite($f, "$var: $value;\n");
+        }
+    }
 }

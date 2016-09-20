@@ -6,6 +6,7 @@ use app\models\Map;
 use app\models\UserFollow;
 use app\models\User;
 use kartik\icons\Icon;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use Yii;
 use yii\helpers\Url;
@@ -13,17 +14,22 @@ use yii\helpers\Url;
 class Helper
 {
 
+    public static function getOpenAskConfig($key)
+    {
+        return ArrayHelper::getValue(Yii::$app->params['OpenAsk'], $key);
+    }
+
     public static function outputJson()
     {
         Yii::$app->response->format = 'json';
     }
-    
+
     public function numberHumanized($number)
     {
         $k = intval($number / 1000);
         return "{$k}K";
     }
-    
+
     public static function summary($html, $length, &$result)
     {
         $txt = strip_tags($html);
@@ -33,17 +39,6 @@ class Helper
             $result = 1;
         }
         return mb_substr($txt, 0, $length, 'UTF-8') . '...';
-    }
-
-    /**
-     * 获取毫秒数
-     * microtime(true) * 1000 在 32 位下会溢出
-     * @return string
-     */
-    public static function timeMs()
-    {
-        list($f, $t) = explode(' ', microtime());
-        return $t . substr($f, 2, 3);
     }
 
     /**

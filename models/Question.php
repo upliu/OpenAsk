@@ -2,6 +2,9 @@
 
 
 namespace app\models;
+use app\models\base\BaseQuestion;
+use yii\data\ActiveDataProvider;
+use yii\helpers\HtmlPurifier;
 
 /**
  * Class Question
@@ -11,13 +14,28 @@ namespace app\models;
  * @property string[] $tagValues
  * @property User $lastAnswerAuthor
  */
-class Question extends Post
+class Question extends BaseQuestion
 {
+
+    use PostTrait;
+
+    public static function tableName()
+    {
+        return '{{%question}}';
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'title' => \Yii::t('app', '标题'),
+            'tagValues' => \Yii::t('app', '话题'),
+        ];
+    }
 
     public function getTopics()
     {
         return $this->hasMany(Topic::className(), ['id' => 'topic_id'])
-            ->viaTable(PostTopic::tableName(), ['post_id' => 'id']);
+            ->viaTable(QuestionTopic::tableName(), ['post_id' => 'id']);
     }
 
     public function scenarios()
@@ -67,9 +85,9 @@ class Question extends Post
     {
         if (parent::beforeSave($insert)) {
             if ($insert) {
-                $this->is_anonymous = intval($this->is_anonymous);
                 $this->last_active = time();
             }
+            $this->body_sanitized = HtmlPurifier::process($this->body);
             return true;
         }
     }
@@ -84,10 +102,10 @@ class Question extends Post
 
         if ($this->_tabValuesSeted) {
             // 删除话题关联数据
-            PostTopic::deleteAll(['post_id' => $this->id]);
+            QuestionTopic::deleteAll(['post_id' => $this->id]);
             // 添加话题关联
             foreach ($this->tagValues as $tag) {
-                PostTopic::add($tag, $this->id, \Yii::$app->user->id);
+                QuestionTopic::add($tag, $this->id, \Yii::$app->user->id);
             }
         }
     }
@@ -95,6 +113,42 @@ class Question extends Post
     public function getLastAnswerAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'last_answer_by']);
+    }
+
+    public function answerSearch($sort = '')
+    {
+        $query = Answer::find();
+        $query->andWhere(['question_id' => $this->id]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'count_vote_up' => SORT_DESC,
+                ]
+            ],
+            'pagination' => [
+                'pageSize' => '20'
+            ],
+        ]);
+
+        switch ($sort) {
+            case 'created':
+                $query->orderBy('created_at desc');
+                break;
+        }
+
+        return $dataProvider;
+    }
+
+    public function isAnswered($userId)
+    {
+        return Answer::find()->where(['question_id' => $this->id, 'author_id' => $userId])->exists();
+    }
+
+    public function answer($userId)
+    {
+        return Answer::findOne(['question_id' => $this->id, 'author_id' => $userId]);
     }
 
 }

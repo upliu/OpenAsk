@@ -3,6 +3,7 @@
 
 namespace app\models;
 use yii\db\ActiveRecord;
+use yii\helpers\Url;
 
 
 /**
@@ -42,9 +43,9 @@ class Topic extends ActiveRecord
 
     public function statistics()
     {
-        $this->count = PostTopic::find()->where(['topic_id' => $this->id])->count();
-        $this->count_last_week = PostTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*7])->count();
-        $this->count_last_month = PostTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*30])->count();
+        $this->count = QuestionTopic::find()->where(['topic_id' => $this->id])->count();
+        $this->count_last_week = QuestionTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*7])->count();
+        $this->count_last_month = QuestionTopic::find()->where(['topic_id' => $this->id])->andWhere(['>=', 'add_time', time()-86400*30])->count();
         return $this;
     }
 
@@ -64,4 +65,8 @@ class Topic extends ActiveRecord
         return static::findOne(['name' => $name]);
     }
 
+    public function getUrl()
+    {
+        return Url::to(['question/index', 'topic' => strtolower($this->name)]);
+    }
 }

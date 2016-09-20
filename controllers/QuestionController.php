@@ -11,11 +11,12 @@ namespace app\controllers;
 
 use app\models\Answer;
 use app\models\Post;
-use app\models\PostSearch;
+use app\models\QuestionSearch;
 use app\models\Question;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use app\models\Topic;
 
 class QuestionController extends Controller
 {
@@ -34,6 +35,21 @@ class QuestionController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionIndex($topic = '', $filter = '')
+    {
+        if ($topic) {
+            $topic = Topic::findByName($topic);
+            if (!$topic) {
+                throw new NotFoundHttpException();
+            }
+        } else {
+            $topic = null;
+        }
+        $search = new QuestionSearch();
+        $dataProvider = $search->question($topic, $filter);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'topic' => $topic, 'filter' => $filter]);
     }
 
     public function actionCreate()
@@ -67,31 +83,39 @@ class QuestionController extends Controller
     {
         $question = $this->findModel($id);
         $answer = new Answer();
-        $dataProvider = (new PostSearch())->answer($id, $sort);
+        $dataProvider = $question->answerSearch($sort);
+        $myAnswer = !\Yii::$app->user->isGuest ? $question->answer(\Yii::$app->user->id) : null;
         return $this->render('view', [
             'question' => $question,
             'dataProvider' => $dataProvider,
             'answer' => $answer,
+            'myAnswer' => $myAnswer,
         ]);
     }
 
-    public function actionAnswer($question_id, $answer_id, $sort = '')
+    public function actionAnswer($question_id, $answer_id)
     {
         $question = $this->findModel($question_id);
-        $answer = Answer::findOne(['id' => $answer_id]);
-        if (!$answer) {
+        $viewAnswer = Answer::findOne(['id' => $answer_id]);
+        if (!$viewAnswer || $viewAnswer->question_id != $question_id) {
             throw new NotFoundHttpException();
         }
-        $dataProvider = (new PostSearch())->answer($question_id, $sort);
+        $answer = new Answer();
         return $this->render('answer', [
             'question' => $question,
-            'dataProvider' => $dataProvider,
+            'answer' => $answer,
+            'viewAnswer' => $viewAnswer,
         ]);
     }
 
+    /**
+     * @param $id
+     * @return null|Question
+     * @throws NotFoundHttpException
+     */
     protected function findModel($id)
     {
-        if (($model = Post::findOne($id)) !== null) {
+        if (($model = Question::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException(\Yii::t('app', '页面不存在'));

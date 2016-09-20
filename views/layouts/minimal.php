@@ -12,7 +12,7 @@ use yii\helpers\Html;
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode(implode(' - ', [$this->title, Yii::$app->name])) ?></title>
+    <title><?= Html::encode($this->title ? implode(' - ', [$this->title, Yii::$app->name]) : Yii::$app->name) ?></title>
     <?php $this->head() ?>
 </head>
 <body>

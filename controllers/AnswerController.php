@@ -4,17 +4,50 @@
 namespace app\controllers;
 
 
+use app\models\Question;
 use yii\web\Controller;
+use app\models\Answer;
+use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 class AnswerController extends Controller
 {
-    public function actionComment($aid)
-    {
 
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'create' => ['post'],
+                ],
+            ],
+        ];
     }
 
-    public function actionConversation($aid, $conversation_id)
+    public function actionCreate($question_id)
     {
+        $question = Question::findOne($question_id);
+        if (!$question) {
+            throw new NotFoundHttpException();
+        }
+        $answer = new Answer(['question_id' => $question_id]);
+        $answer->author_id = \Yii::$app->user->id;
+        if ($answer->load(\Yii::$app->request->post()) && $answer->save()) {
+            return $this->redirect(['question/answer', 'question_id' => $question_id, 'answer_id' => $answer->id]);
+        }
 
+        print_r($answer->errors);
     }
+
 }

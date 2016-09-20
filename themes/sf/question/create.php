@@ -11,12 +11,20 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', '提问');
 ?>
 
-<div class="post-create">
+<div class="container mt30">
+    <div class="row">
+        <div class="col-xs-12 col-md-9 main">
 
-    <?= $this->render('_form', [
-        'post' => $post,
-    ]) ?>
+            <div class="post-create">
 
+                <?= $this->render('_form', [
+                    'post' => $post,
+                ]) ?>
+
+            </div>
+
+        </div>
+    </div>
 </div>
 <?php
 /*
@@ -44,4 +52,4 @@ $this->title = Yii::t('app', '提问');
     <div><button class="btn btn-primary" type="submit">提交</button></div>
 </form>
 
-//*/?>
+//*/ ?>

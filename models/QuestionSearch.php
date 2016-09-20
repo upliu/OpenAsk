@@ -6,11 +6,12 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Post;
+use app\models\QuestionTopic;
 
 /**
  * PostSearch represents the model behind the search form about `app\models\Post`.
  */
-class PostSearch extends Post
+class QuestionSearch extends Question
 {
     /**
      * @inheritdoc
@@ -41,7 +42,7 @@ class PostSearch extends Post
      */
     public function search($params)
     {
-        $query = Post::find();
+        $query = Question::find();
 
         // add conditions that should always apply here
 
@@ -83,6 +84,24 @@ class PostSearch extends Post
         return $dataProvider;
     }
 
+    public function index()
+    {
+        $query = Question::find();
+        $query->with('author', 'lastAnswerAuthor', 'topics');
+        $query->limit(50);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'last_active' => SORT_DESC,
+                ]
+            ],
+            'pagination' => false
+        ]);
+
+        return $dataProvider;
+    }
+
     public function question(Topic $topic = null, $filter = '')
     {
         $query = Question::find();
@@ -100,15 +119,15 @@ class PostSearch extends Post
         ]);
 
         if ($topic) {
-            $query->topicId($topic->id);
+            $this->topicId($query, $topic->id);
         }
 
         switch ($filter) {
             case 'unanswered':
-                $query->noAnswer();
+                $query->andWhere(['count_answer' => 0]);
                 break;
             case 'unsolved':
-                $query->noAccept();
+                $query->andWhere(['accept_answer_id' => 0]);
                 break;
         }
 
@@ -139,5 +158,12 @@ class PostSearch extends Post
         }
 
         return $dataProvider;
+    }
+
+    protected function topicId($query, $topic_id)
+    {
+        return $query->andWhere(['in', 'id',
+            QuestionTopic::find()->select('post_id')->where(['topic_id' => $topic_id])
+        ]);
     }
 }

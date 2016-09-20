@@ -10,7 +10,6 @@ $config = [
     'id' => 'app',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-	'defaultRoute' => 'explore',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -34,7 +33,7 @@ $config = [
             'useFileTransport' => true,
         ],
         'log' => [
-//            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
@@ -47,20 +46,34 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'home' => 'index/index',
-                'topic' => 'topic/index',
-                'explore' => 'explore/index',
-                'search' => 'search/index',
-                'settings' => 'settings/index',
-                'inbox' => 'inbox/index',
-                'logout' => 'site/logout',
-                't/<topicName:.+>' => 'explore/index',
+                '/' => 'index/index',
+
                 'people/<slug:[\w-]{5,}>' => 'people/view',
+                'people/<slug:[\w-]{5,}>/<action:[\w-]+>' => 'people/<action>',
+
+                'topic/<topic:.+>' => 'question/index',
+                'questions/<filter:.+>' => 'question/index',
+                'questions' => 'question/index',
+                'ask' => 'question/create',
                 'question/<id:[\d]+>' => 'question/view',
-                'question/update/<id:[\d]+>' => 'question/update',
+                'question/<id:[\d]+>/edit' => 'question/update',
                 'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>' => 'question/answer',
+
+                'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>/edit' => 'answer/update',
+
+                '<controller:[\w-]+>' => '<controller>/index',
             ],
         ],
+        'view' => [
+            /** @see http://www.yiiframework.com/doc-2.0/guide-output-theming.html */
+            'theme' => [
+                'basePath' => '@app/themes/sf',
+                'baseUrl' => '@web/themes/sf',
+                'pathMap' => [
+                    '@app/views' => '@app/themes/sf',
+                ],
+            ],
+        ]
     ],
     'params' => $params,
 ];

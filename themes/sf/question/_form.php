@@ -54,7 +54,7 @@ use vova07\imperavi\Widget;
     ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($post->isNewRecord ? Yii::t('app', '发布') : Yii::t('app', '编辑'), ['class' => 'i-btn i-btn-blue']) ?>
+        <?= Html::submitButton($post->isNewRecord ? Yii::t('app', '发布') : Yii::t('app', '编辑'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
