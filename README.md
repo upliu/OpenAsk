@@ -23,6 +23,7 @@ php yii serve --docroot=@app/web --port=8080 127.0.0.1
 ----
 
 - 打开终端，启动 PHP 服务：```php yii serve --docroot=@app/web --port=8080 127.0.0.1```，（PHP 版本必须大于等于 5.4）
+- 新建终端窗口，更改当前目录到主题目录 ```cd web/themes/sf```，运行 ```npm install```
 - 新建终端窗口，更改当前目录到主题目录 ```cd web/themes/sf```，启动 gulp ```gulp && gulp watch```
 - 新建终端窗口，更改当前目录到主题目录 ```cd web/themes/sf```，启动 browser-sync ```browser-sync start -p 127.0.0.1:8080  -f '*.css'```
 
