@@ -10,3 +10,8 @@ var OpenAsk = {
         return $.post(url, data);
     }
 }
+
+function commentBox()
+{
+    console.log('commentBox...')
+}

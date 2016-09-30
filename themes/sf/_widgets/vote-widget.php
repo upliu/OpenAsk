@@ -1,11 +1,11 @@
 <?php
 use kartik\icons\Icon;
 
-/** @var $data [] */
+/** @var $countVoteUp int */
 ?>
 
 <div class="widget widget-vote">
-    <span class="asc"><?= Icon::show('sort-asc') ?></span>
-    <span class="count"><?= $count ?></span>
-    <span class="desc"><?= Icon::show('sort-desc') ?></span>
+    <div class="asc"><?= Icon::show('sort-asc') ?></div>
+    <div class="desc"><?= Icon::show('sort-desc') ?></div>
+    <div class="count"><?= $countVoteUp ?></div>
 </div>

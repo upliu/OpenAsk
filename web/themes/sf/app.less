@@ -233,17 +233,36 @@
   strong {
     color: #333;
   }
-  .info {
-    margin-left: 40px;
-  }
   .author {
     margin-left: 5px;
     font-weight: bold;
   }
 }
 
+.post {
+  .vote-wrap {
+    float: left;
+  }
+  .meta {
+    line-height: 32px;
+    span,a {
+      color: #999;
+    }
+  }
+  .offset {
+    margin-left: 55px;
+  }
+  .body {
+    margin-bottom: 15px;
+  }
+}
+
 .question-detail {
-  //height: 150px;
+  &:after {
+    display: table;
+    content: ' ';
+    clear: both;
+  }
 }
 
 .question-answer {
@@ -258,3 +277,18 @@
   border-bottom: 1px solid #ddd;
 }
 
+.comment-box {
+  margin: 10px 0 15px 0;
+  padding: 10px;
+  background: #f6f6f6;
+  .hover-show {
+    display: none;
+  }
+  .comment-item {
+    &:hover {
+      .hover-show {
+        display: block;
+      }
+    }
+  }
+}

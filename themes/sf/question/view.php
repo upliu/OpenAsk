@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 use vova07\imperavi\Widget;
 use yii\helpers\Url;
 use yii\widgets\ListView;
+use kartik\icons\Icon;
 
 /* @var $question app\models\Question */
 /* @var $answer app\models\Answer */
@@ -51,19 +52,46 @@ $this->title = $question->title;
 <div class="row">
     <div class="col-xs-12 col-md-9 main">
 
-        <div class="question-detail">
+        <div class="question-detail post">
+            <div class="vote-wrap">
             <?= VoteWidget::widget([
-                'count' => $question->count_vote_up
+                'countVoteUp' => $question->count_vote_up
             ]) ?>
+            </div>
+            <div class="offset">
             <div class="body">
                 <?= $question->body_sanitized ?>
             </div>
             <div class="meta">
-                <span><?= Yii::$app->formatter->asRelativeTime($question->created_at) ?></span>
+                <span><?= Yii::$app->formatter->asRelativeTime($question->created_at) ?><?= Yii::t('app', '提问') ?></span>
                 <?php if ($question->author_id == Yii::$app->user->id): ?>
                 <span><?= Html::a(Yii::t('app', '编辑'), ['question/update', 'id' => $question->id]) ?></span>
                 <?php endif; ?>
-                <span><?= $question->count_comment > 0 ? $question->count_comment . ' ' : '' ?><?= Yii::t('app', '评论') ?></span>
+                <span><a href="javascript:;" onclick="commentBox();"><?= $question->count_comment > 0 ? $question->count_comment . ' ' : '' ?><?= Yii::t('app', '评论') ?></a></span>
+            </div>
+                <div class="comment-box">
+                    <div class="comments">
+                        <div class="comment-item">
+                            <div class="vote">
+                                <div><?= Icon::show('sort-asc') ?></div>
+                            </div>
+                            <div class="offset">
+                                <div class="reply">
+                                    回复 sanyun：
+                                </div>
+                                <div class="body">
+                                    <p>使用交互上，可以将同一用户的订单合并展示。但是在数据库层面最好不要把用户的订单直接合并。如有必要，可以另外建一张表合并同一用户的未处理订单展示到卖家后台。</p>
+                                </div>
+                                <div>
+                                    开飞机的小蜗牛
+                                    ·
+                                    <span class="meta">3 天前</span>
+                                    <span class="op"><?= Icon::show('reply') ?></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -73,7 +101,7 @@ $this->title = $question->title;
 
         <?= ListView::widget([
             'emptyText' => '',
-            'itemOptions' => ['class' => 'answer-item'],
+            'itemOptions' => ['class' => 'answer-item post'],
             'dataProvider' => $dataProvider,
             'itemView' => 'answer-item',
             'summary' => '',

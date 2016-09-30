@@ -8,10 +8,13 @@ use yii\base\Widget;
 
 class VoteWidget extends Widget
 {
-    public $count;
+
+    public $countVoteUp = 0;
 
     public function run()
     {
-        return $this->render('@app/views/_widgets/vote-widget', ['count' => $this->count]);
+        return $this->render('@app/views/_widgets/vote-widget', [
+            'countVoteUp' => $this->countVoteUp
+        ]);
     }
 }

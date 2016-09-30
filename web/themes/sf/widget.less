@@ -4,7 +4,8 @@
 .widget-ask {
   border: 1px solid #fbeed5;
 }
-.widget-ask p, .widget-login p {
+.widget-ask p
+, .widget-login p {
   margin-bottom: 10px;
 }
 
@@ -21,47 +22,23 @@
 
 // vote-widget
 .widget-vote {
-  display: inline-block;
   position: relative;
   width: 40px;
-  height: 54px;
-  font-size: 18px;
-  background: #f3f3f3;
-  color: #666;
+  color: #777;
   text-align: center;
-  border-radius: 2px;
-  box-shadow: 0 1px 1px rgba(0,0,0,.3);
-  -webkit-transition-duration: .2s;
-  transition-duration: .2s;
-  &:hover {
-    background: #fff7e2;
-  }
   .asc,.desc {
-    width: 100%;
-    display: block;
-    font-size: 24px;
+    font-size: 26px;
+    line-height: 1;
     position: absolute;
-    i {
-      position: relative;
-    }
+    width: 100%;
     &:hover {
-      color: red;
+      cursor: pointer;
     }
   }
-  .asc {
-    height: 36px;
-    i {
-      top: -2px;
-    }
-  }
+  .asc {top:0}
+  .desc {bottom:0}
   .count {
-    line-height: 54px;
-  }
-  .desc {
-    height: 18px;
-    bottom: 0;
-    i {
-      top: -14px;
-    }
+    font-size: 20px;
+    padding: 16px 0;
   }
 }
