@@ -20,10 +20,10 @@
         "yiisoft/yii2-swiftmailer": "*",
         "vova07/yii2-imperavi-widget": "*",
         "kartik-v/yii2-widget-select2": "@dev",
-        "kartik-v/yii2-icons": "@dev"
+        "kartik-v/yii2-icons": "@dev",
+        "dektrium/yii2-user": "0.9.*@dev"
     },
     "require-dev": {
-        "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
         "yiisoft/yii2-faker": "*"
