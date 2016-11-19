@@ -1,16 +1,16 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
-    "keywords": ["yii2", "framework", "basic", "project template"],
-    "homepage": "http://www.yiiframework.com/",
+    "name": "upliu/OpenAsk",
+    "description": "OpenAsk 是一个开源的问答系统",
+    "keywords": ["yii2", "question/answer", "forum"],
+    "homepage": "https://getopenask.com/",
     "type": "project",
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/yiisoft/yii2/issues?state=open",
-        "forum": "http://www.yiiframework.com/forum/",
-        "wiki": "http://www.yiiframework.com/wiki/",
-        "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"
+        "issues": "https://github.com/upliu/OpenAsk/issues?state=open",
+        "forum": "https://getopenask.com/",
+        "doc": "https://getopenask.com/doc/",
+        "irc": "irc://irc.freenode.net/OpenAsk",
+        "source": "https://github.com/upliu/OpenAsk"
     },
     "minimum-stability": "stable",
     "require": {
