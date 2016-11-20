@@ -17,11 +17,7 @@ composer install
 php yii serve --docroot=@app/web --port=8080 127.0.0.1
 ```
 - 访问首页：http://127.0.0.1:8080/
-
-系统使用
-----
-
-- 登录请访问：http://127.0.0.1:8080/site/login ，在输入框输入用户 ID（例如 1）点击登录出现登录成功的提示
+- 帐号在 openask_user 表，密码都是 123456 。admin|123456
 
 开发流程
 ----
