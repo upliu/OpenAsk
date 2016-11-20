@@ -18,16 +18,13 @@ $config = [
             'targets' => [
                 [
                     'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                    'levels' => YII_DEBUG
+                        ? ['error', 'warning', 'info', 'trace', 'profile']
+                        : ['error', 'warning'],
                 ],
             ],
         ],
         'db' => $db,
-    ],
-    'modules' => [
-        'user' => [
-            'class' => 'dektrium\user\Module',
-        ],
     ],
     'params' => $params,
     /*

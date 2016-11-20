@@ -71,7 +71,7 @@ $this->registerJsFile('@web/static/dist/people-edit.js', ['depends' => AppAsset:
             </div>
         </div>
     </div>
-    
+
     <div class="i-item <?= $user->bio ? '' : 'empty' ?>">
         <h3 class="i-label"><?= Yii::t('app', '个人简介') ?></h3>
         <div class="i-content">
@@ -113,7 +113,7 @@ $this->registerJsFile('@web/static/dist/people-edit.js', ['depends' => AppAsset:
             </div>
         </div>
     </div>
-    
+
     <div class="i-item <?= $user->location ? '' : 'empty' ?>">
         <h3 class="i-label"><?= Yii::t('app', '居住地') ?></h3>
         <div class="i-content">

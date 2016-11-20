@@ -243,13 +243,13 @@
   .vote-wrap {
     float: left;
   }
-  .meta {
+  > .meta {
     line-height: 32px;
     span,a {
       color: #999;
     }
   }
-  .offset {
+  > .offset {
     margin-left: 55px;
   }
   .body {
@@ -281,14 +281,37 @@
   margin: 10px 0 15px 0;
   padding: 10px;
   background: #f6f6f6;
-  .hover-show {
-    display: none;
-  }
+  color: #666;
   .comment-item {
+    margin-bottom: 10px;
+    border-bottom: 1px dotted #ddd;
+    .vote,.op {
+      display: none;
+    }
+    .vote {
+      position: absolute;
+      width: 20px;
+      font-size: 20px;
+      text-align: center;
+    }
+    .op {
+      color: @brand-primary;
+      float: right;
+    }
+    .offset {
+      margin-left: 30px;
+    }
+    .comment-meta {
+      margin-bottom: 10.5px;
+    }
     &:hover {
-      .hover-show {
+      .vote {
         display: block;
       }
+      .op {
+        display: inline;
+      }
     }
+
   }
 }

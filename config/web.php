@@ -11,6 +11,46 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+        'authClientCollection' => [
+            'class'   => \yii\authclient\Collection::className(),
+            'clients' => [
+                'facebook' => [
+                    'class'        => 'dektrium\user\clients\Facebook',
+                    'clientId'     => 'APP_ID',
+                    'clientSecret' => 'APP_SECRET',
+                ],
+                'twitter' => [
+                    'class'          => 'dektrium\user\clients\Twitter',
+                    'consumerKey'    => 'CONSUMER_KEY',
+                    'consumerSecret' => 'CONSUMER_SECRET',
+                ],
+                'google' => [
+                    'class'        => 'dektrium\user\clients\Google',
+                    'clientId'     => 'CLIENT_ID',
+                    'clientSecret' => 'CLIENT_SECRET',
+                ],
+                'github' => [
+                    'class'        => 'dektrium\user\clients\GitHub',
+                    'clientId'     => 'CLIENT_ID',
+                    'clientSecret' => 'CLIENT_SECRET',
+                ],
+                'vkontakte' => [
+                    'class'        => 'dektrium\user\clients\VKontakte',
+                    'clientId'     => 'CLIENT_ID',
+                    'clientSecret' => 'CLIENT_SECRET',
+                ],
+                'yandex' => [
+                    'class'        => 'dektrium\user\clients\Yandex',
+                    'clientId'     => 'CLIENT_ID',
+                    'clientSecret' => 'CLIENT_SECRET'
+                ],
+                'linkedin' => [
+                    'class'        => 'dektrium\user\clients\LinkedIn',
+                    'clientId'     => 'CLIENT_ID',
+                    'clientSecret' => 'CLIENT_SECRET'
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'BhGwCRHZ7b8Qr9t19grCs9YGhNP17erb',
@@ -56,8 +96,6 @@ $config = [
                 'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>' => 'question/answer',
 
                 'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>/edit' => 'answer/update',
-
-                '<controller:[\w-]+>' => '<controller>/index',
             ],
         ],
         'view' => [
@@ -70,11 +108,6 @@ $config = [
                 ],
             ],
         ]
-    ],
-    'modules' => [
-        'user' => [
-            'class' => 'dektrium\user\Module',
-        ],
     ],
     'params' => $params,
 ];

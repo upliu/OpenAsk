@@ -71,9 +71,10 @@ $this->title = $question->title;
             </div>
                 <div class="comment-box">
                     <div class="comments">
+
                         <div class="comment-item">
                             <div class="vote">
-                                <div><?= Icon::show('sort-asc') ?></div>
+                                <?= Icon::show('sort-asc') ?>
                             </div>
                             <div class="offset">
                                 <div class="reply">
@@ -82,13 +83,16 @@ $this->title = $question->title;
                                 <div class="body">
                                     <p>使用交互上，可以将同一用户的订单合并展示。但是在数据库层面最好不要把用户的订单直接合并。如有必要，可以另外建一张表合并同一用户的未处理订单展示到卖家后台。</p>
                                 </div>
-                                <div>
+                                <div class="comment-meta">
                                     开飞机的小蜗牛
                                     ·
                                     <span class="meta">3 天前</span>
                                     <span class="op"><?= Icon::show('reply') ?></span>
                                 </div>
                             </div>
+                        </div>
+                        <div>
+                            <textarea rows="1"></textarea>
                         </div>
                     </div>
                 </div>

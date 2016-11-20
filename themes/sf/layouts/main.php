@@ -63,12 +63,12 @@ if (!Yii::$app->user->isGuest) {
     $items[] = [
         'label' => Yii::t('app', '提问'),
         'encode' => false,
-        'url' => ['question/create'],
+        'url' => ['/question/create'],
     ];
     $items[] = [
         'label' => Icon::show('bell'),
         'encode' => false,
-        'url' => ['notification/index'],
+        'url' => ['/notification/index'],
     ];
 }
 $items[] = $this->render('_user');
@@ -81,9 +81,9 @@ echo Nav::widget([
     'encodeLabels' => false,
     'options' => ['class' => 'navbar-nav'],
     'items' => [
-        ['label' => Yii::t('app', '首页'), 'url' => ['index/index']],
-        ['label' => Yii::t('app', '话题'), 'url' => ['topic/index']],
-        ['label' => Yii::t('app', '会员'), 'url' => ['users/index']],
+        ['label' => Yii::t('app', '首页'), 'url' => ['/index/index']],
+        ['label' => Yii::t('app', '话题'), 'url' => ['/topic/index']],
+        ['label' => Yii::t('app', '会员'), 'url' => ['/users/index']],
     ],
 ]);
 NavBar::end();
@@ -93,22 +93,22 @@ NavBar::end();
 <div class="container">
     <?php
     $items = [
-        ['label' => Icon::show('home', [], null, false).Yii::t('app', '首页'), 'url' => ['index/index'], 'encode' => false, 'linkOptions' => ['class' => 'link']],
-        ['label' => Icon::show('list-alt', [], null, false).Yii::t('app', '动态'), 'url' => ['feed/index'], 'encode' => false, 'linkOptions' => ['class' => 'link']],
+        ['label' => Icon::show('home', [], null, false).Yii::t('app', '首页'), 'url' => ['/index/index'], 'encode' => false, 'linkOptions' => ['class' => 'link']],
+        ['label' => Icon::show('list-alt', [], null, false).Yii::t('app', '动态'), 'url' => ['/feed/index'], 'encode' => false, 'linkOptions' => ['class' => 'link']],
         '<li class="space">|</li>',
     ];
 
     foreach (Helper::getOpenAskConfig('topicNames') as $topicName) {
         $items[] = [
             'label' => $topicName,
-            'url' => ['question/index', 'topic' => $topicName],
+            'url' => ['/question/index', 'topic' => $topicName],
             'linkOptions' => ['class' => 'topic'],
         ];
     }
 
     $items[] = [
         'label' => '···',
-        'url' => ['topic/index'],
+        'url' => ['/topic/index'],
         'options' => ['class' => 'all-topic'],
     ];
 
