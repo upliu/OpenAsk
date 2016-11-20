@@ -1,6 +1,8 @@
 <?php
 
 /* @var $this yii\web\View */
+use app\models\Comment;
+use app\widgets\CommentWidget;
 use app\widgets\VoteWidget;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -27,7 +29,7 @@ $this->title = $question->title;
                             <li><?= Html::a($topic->name, $topic->getUrl()) ?></li>
                         <?php endforeach; ?>
                     </ul>
-                    <?= Html::a($question->author->display_name, ['people/view', 'slug' => $question->author->slug], ['class' => 'author']) ?>
+                    <?= Html::a($question->author->display_name, ['/people/view', 'slug' => $question->author->slug], ['class' => 'author']) ?>
                     <?= Yii::$app->formatter->asRelativeTime($question->last_active) ?><?= Yii::t('app', '提问') ?>
                     ·
                     <?= Html::a(Yii::t('app', '编辑'), ['question/update', 'id' => $question->id]) ?>
@@ -84,16 +86,36 @@ $this->title = $question->title;
                                     <p>使用交互上，可以将同一用户的订单合并展示。但是在数据库层面最好不要把用户的订单直接合并。如有必要，可以另外建一张表合并同一用户的未处理订单展示到卖家后台。</p>
                                 </div>
                                 <div class="comment-meta">
-                                    开飞机的小蜗牛
+                                    <a></a>
+                                    <?= Html::a('开飞机的小蜗牛', ['/people/view', 'slug' => 'admin']) ?>
                                     ·
                                     <span class="meta">3 天前</span>
                                     <span class="op"><?= Icon::show('reply') ?></span>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <textarea rows="1"></textarea>
+
+                        <div class="comment-item">
+                            <div class="vote">
+                                <?= Icon::show('sort-asc') ?>
+                            </div>
+                            <div class="offset">
+                                <div class="reply">
+                                    回复 sanyun：
+                                </div>
+                                <div class="body">
+                                    <p>使用交互上，可以将同一用户的订单合并展示。但是在数据库层面最好不要把用户的订单直接合并。如有必要，可以另外建一张表合并同一用户的未处理订单展示到卖家后台。</p>
+                                </div>
+                                <div class="comment-meta">
+                                    <a></a>
+                                    <?= Html::a('开飞机的小蜗牛', ['/people/view', 'slug' => 'admin']) ?>
+                                    ·
+                                    <span class="meta">3 天前</span>
+                                    <span class="op"><?= Icon::show('reply') ?></span>
+                                </div>
+                            </div>
                         </div>
+                        <?= CommentWidget::widget(['comment' => new Comment(['question_id' => $question->id])]) ?>
                     </div>
                 </div>
             </div>
