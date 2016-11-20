@@ -19,7 +19,7 @@ use yii\web\UploadedFile;
 class PeopleController extends Controller
 {
     use AjaxValidationTrait;
-    
+
     public function behaviors()
     {
         return [
@@ -39,7 +39,7 @@ class PeopleController extends Controller
     public function actionView($slug)
     {
         /** @var User $user */
-        $user = User::findOne(['slug' => $slug]);
+        $user = User::findBySlug($slug);
         return $this->render('view', [
             'user' => $user,
         ]);
@@ -52,7 +52,7 @@ class PeopleController extends Controller
         if (\Yii::$app->request->isPost) {
             \Yii::$app->response->format = 'json';
             $user->scenario = 'edit';
-            
+
             // 上传头像 {{{
             if ($img = UploadedFile::getInstanceByName('avatar-image')) {
                 $errors = [];
