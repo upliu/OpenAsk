@@ -2,18 +2,12 @@
 
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests/codeception');
 
-$params = require(__DIR__ . '/params.php');
-$db = require(__DIR__ . '/db.php');
-
 $config = [
     'id' => 'app-console',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
     'components' => [
-        'cache' => [
-            'class' => 'yii\caching\FileCache',
-        ],
         'log' => [
             'targets' => [
                 [
@@ -24,9 +18,12 @@ $config = [
                 ],
             ],
         ],
-        'db' => $db,
     ],
-    'params' => $params,
+    'controllerMap' => [
+        'stubs' => [
+            'class' => 'bazilio\stubsgenerator\StubsController',
+        ],
+    ],
     /*
     'controllerMap' => [
         'fixture' => [ // Fixture generation command line.

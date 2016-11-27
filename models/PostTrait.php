@@ -4,6 +4,7 @@
 namespace app\models;
 
 
+use app\behaviors\UuidBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\helpers\HtmlPurifier;
@@ -21,12 +22,18 @@ trait PostTrait
     {
         return [
             TimestampBehavior::className(),
+            UuidBehavior::className(),
         ];
     }
 
     public function getAuthor()
     {
         return $this->hasOne(User::className(), ['id' => 'author_id']);
+    }
+
+    public function sanitize($html)
+    {
+        return HtmlPurifier::process($html);
     }
 
 }

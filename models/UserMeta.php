@@ -22,6 +22,7 @@ use Yii;
  * @property string $location
  * @property string $display_name
  * @property string $slug
+ * @property integer $reputation
  *
  * @property User $user
  */
@@ -42,7 +43,7 @@ class UserMeta extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'display_name'], 'required'],
-            [['user_id', 'last_read_feed', 'count_vote_up', 'count_thank', 'count_ask', 'count_answer', 'count_mark', 'gender'], 'integer'],
+            [['user_id', 'last_read_feed', 'count_vote_up', 'count_thank', 'count_ask', 'count_answer', 'count_mark', 'gender', 'reputation'], 'integer'],
             [['bio'], 'string'],
             [['avatar'], 'string', 'max' => 256],
             [['headline', 'business', 'location', 'display_name', 'slug'], 'string', 'max' => 128],
@@ -72,6 +73,7 @@ class UserMeta extends \yii\db\ActiveRecord
             'location' => 'Location',
             'display_name' => 'Display Name',
             'slug' => 'Slug',
+            'reputation' => 'Reputation',
         ];
     }
 
@@ -80,6 +82,6 @@ class UserMeta extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id'])->inverseOf('meta');
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 }

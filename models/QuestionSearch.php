@@ -19,7 +19,7 @@ class QuestionSearch extends Question
     public function rules()
     {
         return [
-            [['id', 'created_at', 'updated_at', 'author_id', 'pid', 'count_comment', 'count_answer', 'count_view', 'count_vote_up', 'count_vote_down', 'count_interest', 'count_thank', 'count_mark', 'count_no_help', 'is_lock', 'is_anonymous'], 'integer'],
+            [['id', 'created_at', 'updated_at', 'author_id', 'pid', 'count_comment', 'count_answer', 'count_view', 'count_vote_up', 'count_vote_down', 'count_follow', 'count_thank', 'count_mark', 'count_no_help', 'is_lock', 'is_anonymous'], 'integer'],
             [['title', 'body'], 'safe'],
         ];
     }
@@ -70,7 +70,7 @@ class QuestionSearch extends Question
             'count_view' => $this->count_view,
             'count_vote_up' => $this->count_vote_up,
             'count_vote_down' => $this->count_vote_down,
-            'count_interest' => $this->count_interest,
+            'count_follow' => $this->count_follow,
             'count_thank' => $this->count_thank,
             'count_mark' => $this->count_mark,
             'count_no_help' => $this->count_no_help,
@@ -134,7 +134,7 @@ class QuestionSearch extends Question
         return $dataProvider;
     }
 
-    public function answer($question_id, $sort = '')
+    public function myAnswer($question_id, $sort = '')
     {
         $query = Answer::find();
         $query->andWhere(['question_id' => $question_id]);

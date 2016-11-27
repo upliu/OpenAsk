@@ -1,7 +1,5 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-
 $config = [
     'name' => 'OpenAsk',
     'language' => 'zh-CN',
@@ -55,9 +53,6 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'BhGwCRHZ7b8Qr9t19grCs9YGhNP17erb',
         ],
-        'cache' => [
-            'class' => 'yii\caching\DummyCache',
-        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -77,39 +72,38 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
 		'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
                 '/' => 'index/index',
 
-                'people/<slug:[\w-]{5,}>' => 'people/view',
-                'people/<slug:[\w-]{5,}>/<action:[\w-]+>' => 'people/<action>',
+                'people/<slug:.{5,}>' => '/people/view',
+                'people/<slug:.{5,}>/<action:[\w-]+>' => '/people/<action>',
 
-                'topic/<topic:.+>' => 'question/index',
-                'questions/<filter:.+>' => 'question/index',
-                'questions' => 'question/index',
-                'ask' => 'question/create',
-                'question/<id:[\d]+>' => 'question/view',
-                'question/<id:[\d]+>/edit' => 'question/update',
-                'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>' => 'question/answer',
+                'topic/<topic:.+>' => '/question/index',
+                'questions/<filter:.+>' => '/question/index',
+                'questions' => '/question/index',
+                'ask' => '/question/create',
+                'question/<id:[\d]+>' => '/question/view',
+                'question/<id:[\d]+>/edit' => '/question/update',
+                'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>' => '/question/answer',
 
-                'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>/edit' => 'answer/update',
+                'question/<question_id:[\d]+>/answer/<answer_id:[\d]+>/edit' => '/answer/update',
             ],
         ],
         'view' => [
             /** @see http://www.yiiframework.com/doc-2.0/guide-output-theming.html */
             'theme' => [
-                'basePath' => '@app/themes/sf',
-                'baseUrl' => '@web/themes/sf',
                 'pathMap' => [
-                    '@app/views' => '@app/themes/sf',
+                    '@app/views' => '@app/themes/sf/views',
                 ],
             ],
-        ]
+        ],
+        'assetManager' => [
+            'linkAssets' => YII_DEBUG ? true : false,
+        ],
     ],
-    'params' => $params,
 ];
 
 if (YII_ENV_DEV) {

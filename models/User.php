@@ -1,10 +1,14 @@
 <?php
 namespace app\models;
 use yii\base\UnknownPropertyException;
+use yii\helpers\Url;
 
 /**
  * User
  * @property UserMeta $meta
+ *
+ * @property string $display_name
+ *
  */
 class User extends \dektrium\user\models\User
 {
@@ -47,4 +51,10 @@ class User extends \dektrium\user\models\User
             $meta->link('user', $this);
         }
     }
+
+    public function getHomePageLink()
+    {
+        return Url::to(['/people/view', 'slug' => $this->slug]);
+    }
+
 }

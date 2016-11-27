@@ -1,0 +1,50 @@
+.widget {
+
+}
+.widget-ask {
+  border: 1px solid #fbeed5;
+}
+.widget-ask p
+, .widget-login p {
+  margin-bottom: 10px;
+}
+
+.widget-side-nav > li > a {
+  &:hover {
+    color: @brand-primary;
+    background-color: #f6f6f6;
+  }
+  padding: 6px 12px;
+  margin-left: -12px;
+  color: #666;
+  border-radius: 3px;
+}
+
+// vote-widget
+.widget-vote {
+  position: relative;
+  width: 40px;
+  color: #777;
+  text-align: center;
+  .asc,.desc {
+    font-size: 26px;
+    line-height: 1;
+    position: absolute;
+    width: 100%;
+    &:hover {
+      cursor: pointer;
+      color: @brand-warning;
+    }
+  }
+  .asc {top:0}
+  .desc {bottom:0}
+  .count {
+    font-size: 20px;
+    padding: 16px 0;
+  }
+  &.voted-up .asc,
+  &.voted-down .desc
+  {
+    color: @brand-primary;
+  }
+}

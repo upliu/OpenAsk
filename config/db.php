@@ -14,4 +14,5 @@ return [
     'tablePrefix' => 'openask_',
     'charset' => 'utf8',
     'enableSchemaCache' => true,
+    'schemaCacheDuration' => 10,
 ];

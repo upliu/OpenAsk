@@ -13,10 +13,12 @@ use app\models\Answer;
 use app\models\Post;
 use app\models\QuestionSearch;
 use app\models\Question;
+use app\models\UserActionHistory;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\models\Topic;
+use yii\filters\VerbFilter;
 
 class QuestionController extends Controller
 {
@@ -26,13 +28,29 @@ class QuestionController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['create', 'update'],
+                'only' => ['create', 'update', 'follow'],
                 'rules' => [
                     [
                         'allow' => true,
                         'roles' => ['@'],
                     ]
                 ],
+            ],
+            'verb' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'vote' => ['post'],
+                ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'vote' => [
+                'class' => 'app\actions\VoteAction',
+                'modelClass' => 'app\models\Question',
             ],
         ];
     }
@@ -84,7 +102,7 @@ class QuestionController extends Controller
         $question = $this->findModel($id);
         $answer = new Answer();
         $dataProvider = $question->answerSearch($sort);
-        $myAnswer = !\Yii::$app->user->isGuest ? $question->answer(\Yii::$app->user->id) : null;
+        $myAnswer = !\Yii::$app->user->isGuest ? $question->myAnswer(\Yii::$app->user->id) : null;
         return $this->render('view', [
             'question' => $question,
             'dataProvider' => $dataProvider,
@@ -122,4 +140,41 @@ class QuestionController extends Controller
         }
     }
 
+    /**
+     * 关注问题
+     * @param int $id
+     * @return array
+     */
+    public function actionFollow($id)
+    {
+        \Yii::$app->response->format = 'json';
+        $model = $this->findModel($id);
+        $status = UserActionHistory::followQuestion(
+            \Yii::$app->user->id,
+            $model
+        );
+        return [
+            'count' => $model->count_follow,
+            'status' => $status,
+        ];
+    }
+
+    /**
+     * 收藏问题
+     * @param int $id
+     * @return array
+     */
+    public function actionMark($id)
+    {
+        \Yii::$app->response->format = 'json';
+        $model = $this->findModel($id);
+        $status = UserActionHistory::markQuestion(
+            \Yii::$app->user->id,
+            $model
+        );
+        return [
+            'count' => $model->count_mark,
+            'status' => $status,
+        ];
+    }
 }

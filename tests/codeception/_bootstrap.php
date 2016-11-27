@@ -20,4 +20,4 @@ Yii::setAlias('@tests', dirname(__DIR__));
  * it can be configure localy in your tests
  * @see https://github.com/Codeception/Specify/tree/master/docs
  */
-\Codeception\Specify\Config::setDeepClone(false);
+//\Codeception\Specify\Config::setDeepClone(false);

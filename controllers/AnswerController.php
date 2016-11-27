@@ -30,7 +30,18 @@ class AnswerController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'create' => ['post'],
+                    'vote' => ['post'],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'vote' => [
+                'class' => 'app\actions\VoteAction',
+                'modelClass' => 'app\models\Answer',
             ],
         ];
     }
