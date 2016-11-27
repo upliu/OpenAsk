@@ -1,2 +1,2 @@
 Moved to:
-https://github.com/openask/OpenAsk/
+https://github.com/openask/OpenAsk
