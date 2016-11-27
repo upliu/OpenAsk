@@ -6,7 +6,7 @@ OpenAsk 是一个开源的问答系统。
 运行
 ---
 
-- 导入 dump.sql 到数据库
+- 导入 OpenAsk-xxxx-xx-xx.sql 到数据库
 - 修改配置文件 config/db.php
 - 安装依赖
 ```
@@ -22,16 +22,14 @@ php yii serve --docroot=@app/web --port=8080 127.0.0.1
 开发流程
 ----
 
-- 更改当前目录到主题目录 ```cd web/themes/sf```，运行
+- 安装开发工具
 ```
+npm install -g gulp browser-sync
+cd web/static/ThemeAssetMedia
 npm install
 ```
-- 启动 gulp
-```
-gulp && gulp watch
-```
-- 启动 browser-sync
-```
-browser-sync start -p 127.0.0.1:8080  -f '*.css'
-```
 
+- 启动服务
+```
+./start-dev.sh
+```
